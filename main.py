@@ -7,10 +7,8 @@ from google import generativeai as genai
 
 # Initialize Flask app and Gemini client
 app = Flask(__name__)
-client = genai.GenerativeModel(
-    'gemini-2.0-flash-lite',
-    generation_config={"response_mime_type": "application/json"}
-)
+client = genai.GenerativeModel('gemini-2.0-flash-lite', 
+                              generation_config={"response_mime_type": "application/json"})
 recipes = {}  # In-memory storage for recipe data
 
 # Ensure the images directory exists

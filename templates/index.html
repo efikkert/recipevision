@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Photo Upload</title>
+  <title>Recipe Photo Upload</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <style>
@@ -17,14 +17,14 @@
       --success: #4ade80;
       --error: #ef4444;
     }
-    
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       transition: all 0.3s ease;
     }
-    
+
     body {
       font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg-primary);
@@ -36,7 +36,7 @@
       align-items: center;
       padding: 20px;
     }
-    
+
     .container {
       width: 100%;
       max-width: 400px;
@@ -47,12 +47,12 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .header {
       margin-bottom: 25px;
       text-align: center;
     }
-    
+
     h1 {
       font-size: 24px;
       margin-bottom: 8px;
@@ -62,13 +62,13 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    
+
     p {
       color: var(--text-secondary);
       font-size: 14px;
       line-height: 1.4;
     }
-    
+
     .upload-area {
       background: rgba(255, 255, 255, 0.05);
       border: 2px dashed rgba(255, 255, 255, 0.2);
@@ -80,28 +80,28 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .upload-area:hover {
       background: rgba(255, 255, 255, 0.08);
       border-color: var(--accent-light);
     }
-    
+
     .upload-icon {
       font-size: 40px;
       color: var(--accent);
       margin-bottom: 15px;
     }
-    
+
     .upload-text {
       font-size: 15px;
       margin-bottom: 6px;
     }
-    
+
     .upload-hint {
       font-size: 12px;
       color: var(--text-secondary);
     }
-    
+
     .upload-input {
       position: absolute;
       top: 0;
@@ -111,11 +111,11 @@
       opacity: 0;
       cursor: pointer;
     }
-    
+
     .files-container {
       margin: 15px 0;
     }
-    
+
     .files-counter {
       display: flex;
       justify-content: space-between;
@@ -124,33 +124,33 @@
       font-size: 14px;
       color: var(--text-secondary);
     }
-    
+
     .clear-all {
       color: var(--accent-light);
       cursor: pointer;
       font-size: 12px;
       text-decoration: underline;
     }
-    
+
     .thumbnails-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
     }
-    
+
     .thumbnail-item {
       position: relative;
       border-radius: 8px;
       overflow: hidden;
       aspect-ratio: 1;
     }
-    
+
     .thumbnail {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-    
+
     .thumbnail-delete {
       position: absolute;
       top: 5px;
@@ -168,11 +168,11 @@
       opacity: 0;
       transition: opacity 0.2s;
     }
-    
+
     .thumbnail-item:hover .thumbnail-delete {
       opacity: 1;
     }
-    
+
     .file-info {
       font-size: 12px;
       color: var(--text-secondary);
@@ -186,7 +186,7 @@
       white-space: nowrap;
       overflow: hidden;
     }
-    
+
     .submit-btn {
       width: 100%;
       background: var(--accent);
@@ -194,4 +194,304 @@
       border: none;
       padding: 14px;
       border-radius: 10px;
-      font-size:
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(138, 43, 226, 0.3);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      background: rgba(138, 43, 226, 0.5);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .loader {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .loader-spinner {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top: 4px solid var(--accent);
+      animation: spin 1.5s linear infinite;
+    }
+
+    .loader-text {
+      margin-top: 16px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+    }
+
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .float-animation {
+      animation: float 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Magic Recipe Tool</h1>
+      <p>Upload recipe images to get a shareable Paprika URL!</p>
+    </div>
+
+    <form id="uploadForm" method="POST" action="/upload" enctype="multipart/form-data">
+      <div class="upload-area float-animation" id="uploadArea">
+        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+        <div class="upload-text">Drag & drop or click to upload</div>
+        <div class="upload-hint">Supports multiple JPG, PNG, or WEBP images</div>
+        <input type="file" id="photo" name="photo" class="upload-input" accept="image/*" multiple>
+      </div>
+
+      <div class="files-container" id="filesContainer" style="display: none;">
+        <div class="files-counter">
+          <span id="filesCount">0 photos selected</span>
+          <span class="clear-all" id="clearAll">Clear all</span>
+        </div>
+
+        <div class="thumbnails-container" id="thumbnailsContainer"></div>
+      </div>
+
+      <button type="submit" id="submitBtn" class="submit-btn" disabled>
+        <i class="fas fa-upload"></i> Upload Photos
+      </button>
+    </form>
+  </div>
+
+  <div class="loader" id="loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text animate__animated animate__fadeIn animate__delay-1s">Processing your recipe...</div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('photo');
+    const filesContainer = document.getElementById('filesContainer');
+    const filesCount = document.getElementById('filesCount');
+    const clearAll = document.getElementById('clearAll');
+    const thumbnailsContainer = document.getElementById('thumbnailsContainer');
+    const submitBtn = document.getElementById('submitBtn');
+    const loader = document.getElementById('loader');
+    const uploadForm = document.getElementById('uploadForm');
+
+    // File data store
+    let selectedFiles = [];
+
+    // File upload handling
+    fileInput.addEventListener('change', handleFileSelect);
+
+    function handleFileSelect(e) {
+      const files = Array.from(e.target.files || e.dataTransfer.files);
+      if (!files.length) return;
+
+      // Add new files to our collection
+      files.forEach(file => {
+        if (file.type.startsWith('image/')) {
+          const fileId = 'file-' + Date.now() + '-' + Math.random().toString(36).substring(2, 9);
+          selectedFiles.push({
+            id: fileId,
+            file: file,
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            url: URL.createObjectURL(file)
+          });
+        }
+      });
+
+      // Update UI
+      updateFilesUI();
+    }
+
+    // Update the UI based on selected files
+    function updateFilesUI() {
+      // Update files count
+      filesCount.textContent = `${selectedFiles.length} photo${selectedFiles.length === 1 ? '' : 's'} selected`;
+
+      // Show/hide containers
+      if (selectedFiles.length > 0) {
+        filesContainer.style.display = 'block';
+        submitBtn.disabled = false;
+        uploadArea.classList.remove('float-animation');
+      } else {
+        filesContainer.style.display = 'none';
+        submitBtn.disabled = true;
+        uploadArea.classList.add('float-animation');
+      }
+
+      // Clear and rebuild thumbnails
+      thumbnailsContainer.innerHTML = '';
+
+      // Add thumbnails for each file
+      selectedFiles.forEach(fileData => {
+        const thumbnailItem = document.createElement('div');
+        thumbnailItem.className = 'thumbnail-item';
+        thumbnailItem.dataset.fileId = fileData.id;
+
+        const thumbnail = document.createElement('img');
+        thumbnail.className = 'thumbnail';
+        thumbnail.src = fileData.url;
+        thumbnail.alt = fileData.name;
+
+        const deleteBtn = document.createElement('div');
+        deleteBtn.className = 'thumbnail-delete';
+        deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
+        deleteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          removeFile(fileData.id);
+        });
+
+        const fileInfo = document.createElement('div');
+        fileInfo.className = 'file-info';
+        fileInfo.textContent = fileData.name.length > 15 ? 
+          fileData.name.substring(0, 12) + '...' : fileData.name;
+
+        thumbnailItem.appendChild(thumbnail);
+        thumbnailItem.appendChild(deleteBtn);
+        thumbnailItem.appendChild(fileInfo);
+        thumbnailsContainer.appendChild(thumbnailItem);
+      });
+    }
+
+    // Remove file from selection
+    function removeFile(fileId) {
+      const fileData = selectedFiles.find(file => file.id === fileId);
+      if (fileData) URL.revokeObjectURL(fileData.url);
+      selectedFiles = selectedFiles.filter(file => file.id !== fileId);
+      updateFilesUI();
+    }
+
+    // Clear all files
+    clearAll.addEventListener('click', () => {
+      selectedFiles.forEach(fileData => {
+        URL.revokeObjectURL(fileData.url);
+      });
+      selectedFiles = [];
+      fileInput.value = '';
+      updateFilesUI();
+    });
+
+    // Submit button ripple effect
+    submitBtn.addEventListener('mousedown', function(e) {
+      const x = e.clientX - e.target.getBoundingClientRect().left;
+      const y = e.clientY - e.target.getBoundingClientRect().top;
+
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+
+      this.appendChild(ripple);
+
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+
+    // Form submission
+    uploadForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Check if files are selected
+      if (selectedFiles.length === 0) return;
+
+      // Show loading animation
+      loader.style.display = 'flex';
+
+      // Submit the form programmatically after showing loader
+      this.submit();
+    });
+
+    // Drag and drop functionality
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      uploadArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight() {
+      uploadArea.style.borderColor = 'var(--accent)';
+      uploadArea.style.background = 'rgba(255, 255, 255, 0.1)';
+    }
+
+    function unhighlight() {
+      uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+      uploadArea.style.background = 'rgba(255, 255, 255, 0.05)';
+    }
+
+    uploadArea.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      handleFileSelect({dataTransfer: dt});
+    }
+  </script>
+</body>
+</html>
