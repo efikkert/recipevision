@@ -1,71 +1,160 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ data.title }}</title>
     <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent: #8a2be2;
+            --accent-light: #9d4edd;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 0;
+            margin: 0;
+            line-height: 1.6;
+            padding-bottom: 80px; /* Space for fixed button */
+        }
+        
+        .container {
             padding: 20px;
             max-width: 800px;
-            margin: auto;
-            background-color: #fff;
+            margin: 0 auto;
         }
+        
         h1 {
-            color: #333;
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--text-primary);
         }
+        
+        p {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .meta-info {
+            margin-bottom: 20px;
+        }
+        
+        .meta-info p {
+            margin-bottom: 8px;
+        }
+        
+        strong {
+            color: var(--text-primary);
+        }
+        
+        h2 {
+            font-size: 20px;
+            margin: 25px 0 15px 0;
+            color: var(--text-primary);
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        
         img {
             max-width: 100%;
             height: auto;
             border-radius: 10px;
+            margin: 15px 0;
         }
-        h2 {
-            color: #666;
-            margin-top: 20px;
+        
+        .copy-button-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-primary);
+            padding: 15px 20px;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
         }
-        ul, ol {
-            text-align: left;
-            line-height: 1.6;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #008CBA;
+        
+        .copy-button {
+            background: var(--accent);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
             cursor: pointer;
-            margin-top: 20px;
+            transition: all 0.2s;
         }
-        button:hover {
-            background-color: #007B9A;
+        
+        .copy-button:hover {
+            background: var(--accent-light);
+        }
+        
+        .copy-button:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
-    <h1>{{ data.title }}</h1>
-    <p>{{ data.description }}</p>
-    {% if data.servings %}<p><strong>Servings:</strong> {{ data.servings }}</p>{% endif %}
-    {% if data.prep_time %}<p><strong>Prep Time:</strong> {{ data.prep_time }}</p>{% endif %}
-    {% if data.cook_time %}<p><strong>Cook Time:</strong> {{ data.cook_time }}</p>{% endif %}
-    {% if data.total_time %}<p><strong>Total Time:</strong> {{ data.total_time }}</p>{% endif %}
-    <h2>Ingredients</h2>
-    <ul>
-        {% for ingredient in data.ingredients %}
-        <li>{{ ingredient }}</li>
-        {% endfor %}
-    </ul>
-    <h2>Directions</h2>
-    <ol>
-        {% for step in data.directions %}
-        <li>{{ step }}</li>
-        {% endfor %}
-    </ol>
-    <p><strong>Nutrition Info:</strong> {{ data.nutrition_info }}</p>
-    <button onclick="copyUrl()">Copy URL</button>
+    <div class="container">
+        <h1>{{ data.title }}</h1>
+        <p>{{ data.description }}</p>
+        
+        <div class="meta-info">
+            {% if data.servings %}<p><strong>Servings:</strong> {{ data.servings }}</p>{% endif %}
+            {% if data.prep_time %}<p><strong>Prep Time:</strong> {{ data.prep_time }}</p>{% endif %}
+            {% if data.cook_time %}<p><strong>Cook Time:</strong> {{ data.cook_time }}</p>{% endif %}
+            {% if data.total_time %}<p><strong>Total Time:</strong> {{ data.total_time }}</p>{% endif %}
+        </div>
+        
+        <h2>Ingredients</h2>
+        <ul>
+            {% for ingredient in data.ingredients %}
+            <li>{{ ingredient }}</li>
+            {% endfor %}
+        </ul>
+        
+        <h2>Directions</h2>
+        <ol>
+            {% for step in data.directions %}
+            <li>{{ step }}</li>
+            {% endfor %}
+        </ol>
+        
+        <p><strong>Nutrition Info:</strong> {{ data.nutrition_info }}</p>
+    </div>
+    
+    <div class="copy-button-container">
+        <button id="copyButton" class="copy-button">Copy URL</button>
+    </div>
+    
     <script>
-        function copyUrl() {
+        // Copy URL functionality
+        document.getElementById("copyButton").addEventListener("click", function() {
             navigator.clipboard.writeText(window.location.href);
             alert('URL copied to clipboard!');
-        }
+        });
     </script>
 </body>
 </html>
