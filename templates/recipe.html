@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ data.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+        }
+        h1 {
+            color: #333;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        h2 {
+            color: #666;
+            margin-top: 20px;
+        }
+        ul, ol {
+            text-align: left;
+            line-height: 1.6;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #007B9A;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ data.title }}</h1>
+    <p>{{ data.description }}</p>
+    {% if data.servings %}<p><strong>Servings:</strong> {{ data.servings }}</p>{% endif %}
+    {% if data.prep_time %}<p><strong>Prep Time:</strong> {{ data.prep_time }}</p>{% endif %}
+    {% if data.cook_time %}<p><strong>Cook Time:</strong> {{ data.cook_time }}</p>{% endif %}
+    {% if data.total_time %}<p><strong>Total Time:</strong> {{ data.total_time }}</p>{% endif %}
+    <h2>Ingredients</h2>
+    <ul>
+        {% for ingredient in data.ingredients %}
+        <li>{{ ingredient }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Directions</h2>
+    <ol>
+        {% for step in data.directions %}
+        <li>{{ step }}</li>
+        {% endfor %}
+    </ol>
+    <p><strong>Nutrition Info:</strong> {{ data.nutrition_info }}</p>
+    <button onclick="copyUrl()">Copy URL</button>
+    <script>
+        function copyUrl() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('URL copied to clipboard!');
+        }
+    </script>
+</body>
+</html>
