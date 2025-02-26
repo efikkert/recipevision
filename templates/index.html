@@ -12,9 +12,9 @@
       --bg-secondary: #1e1e1e;
       --text-primary: #ffffff;
       --text-secondary: #b3b3b3;
-      --accent: #8a2be2;
-      --accent-light: #9d4edd;
-      --success: #4ade80;
+      --accent: #d10505;
+      --accent-light: #d13805;
+      --success: #d10505;
       --error: #ef4444;
     }
 
@@ -209,7 +209,7 @@
     .submit-btn:hover {
       background: var(--accent-light);
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(138, 43, 226, 0.3);
+      box-shadow: 0 6px 15px color(#d10505);
     }
 
     .submit-btn:active {
@@ -217,7 +217,7 @@
     }
 
     .submit-btn:disabled {
-      background: rgba(138, 43, 226, 0.5);
+      background: rgb(220, 42, 42, / 50%);
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
@@ -286,8 +286,8 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>Magic Recipe Tool</h1>
-      <p>Upload recipe images to get a shareable Paprika URL!</p>
+      <h1>Paprika Recipe Tool</h1>
+      <p>Upload pictures of a recipe to get a shareable URL to can paste into Paprika!</p>
     </div>
 
     <form id="uploadForm" method="POST" action="/upload" enctype="multipart/form-data">

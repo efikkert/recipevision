@@ -50,14 +50,14 @@ def upload():
     prompt = """
     The following images are all part of the same recipe. Please convert the recipe text from these images into a structured JSON object with the following keys:
     - title: string
-    - description: string (short summary)
+    - description: string (If no description already exists, write a short, fun summary of the food with a suggested pairing of other food)
     - servings: string or integer
     - prep_time: string
     - cook_time: string
     - total_time: string
     - ingredients: list of strings
     - directions: list of strings (numbered steps)
-    - nutrition_info: string (estimate using ingredient list and quantities if not provided, e.g., "Approximately 300 calories")
+    - nutrition_info: string (estimate using ingredient list and quantities if not provided, e.g., "Approximately 300 calories per [serving unit])
     Output only the JSON object, without any additional text or explanations.
     """
 
