@@ -57,7 +57,7 @@ def upload():
     - total_time: string
     - ingredients: list of strings
     - directions: list of strings (numbered steps)
-    - nutrition_info: string (estimate using ingredient list and quantities if not provided, e.g., "Approximately 300 calories per [serving unit])
+    - nutrition_info: string (estimate using ingredient list and quantities if not provided, e.g., "Approximately 300 calories per [unit])
     Output only the JSON object, without any additional text or explanations.
     """
 

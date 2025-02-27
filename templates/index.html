@@ -100,6 +100,7 @@
     .upload-hint {
       font-size: 12px;
       color: var(--text-secondary);
+      text-transform: italic;
     }
 
     .upload-input {
@@ -217,10 +218,11 @@
     }
 
     .submit-btn:disabled {
-      background: rgb(220, 42, 42, / 50%);
+      background: rgb(220, 42, 42, 20%);
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
+      color:gray;
     }
 
     .loader {
@@ -293,8 +295,8 @@
     <form id="uploadForm" method="POST" action="/upload" enctype="multipart/form-data">
       <div class="upload-area float-animation" id="uploadArea">
         <i class="fas fa-cloud-upload-alt upload-icon"></i>
-        <div class="upload-text">Drag & drop or click to upload</div>
-        <div class="upload-hint">Supports multiple JPG, PNG, or WEBP images</div>
+        <div class="upload-text">Tap to upload</div>
+        <!--<div class="upload-hint">Supports multiple JPG, PNG, or WEBP images</div>-->
         <input type="file" id="photo" name="photo" class="upload-input" accept="image/*" multiple>
       </div>
 
@@ -308,7 +310,7 @@
       </div>
 
       <button type="submit" id="submitBtn" class="submit-btn" disabled>
-        <i class="fas fa-upload"></i> Upload Photos
+        <i class="fas fa-upload"></i> Submit
       </button>
     </form>
   </div>
